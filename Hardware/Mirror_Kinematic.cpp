@@ -90,7 +90,7 @@ bool Mirror_Kinematic::X2P(float *X, float *P)
     uint8_t k = 0;
     do
         {
-            if( !P2X(P,Xn))
+            if(!P2X(P,Xn) || k==20)
                 return false;
             dx = Xn[0]-X[0];
             dy = Xn[1]-X[1];

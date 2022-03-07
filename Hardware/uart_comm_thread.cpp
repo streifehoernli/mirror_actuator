@@ -1,5 +1,6 @@
 // includes
 #include "uart_comm_thread.h"
+#include <cstdint>
 
 extern GPA myGPA;
 
@@ -117,7 +118,7 @@ void uart_comm_thread::run(void)
 				break;	
 			case 1012:
 				send(101,34,2*4,(char *)&(m_data->est_xy[0]));		// send actual xy values 
-				send_state = 202;
+				send_state = 250;
 				break;	
 			case 125:		// number of iterations in the trafo
 				send(125,1,1,(char *)&m_data->num_it);		
@@ -168,12 +169,13 @@ void uart_comm_thread::sendThreadFlag() {
 void uart_comm_thread::send_text(const char *txt)
 {	
 	uint16_t N=0;
-   	while(txt[N] != '\0')		// get length of text
+   	while(txt[N] != 0)		// get length of text
      	N++;
-	buffer[0]=254;buffer[1]=1;buffer[2]=255;	// standard pattern
+    buffer[0]=254;buffer[1]=1;buffer[2]=255;	// standard pattern
 	buffer[3] = 241;
 	buffer[4] = 1;
-	buffer[5] = *(char *)N;
+	buffer[5] = N%256;
+    buffer[6] = N/256;
 	uart->write(buffer, 7);
 	uart->write(txt,N);
     char dum = 0;

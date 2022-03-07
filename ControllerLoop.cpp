@@ -26,7 +26,7 @@ void ControllerLoop::loop(void){
         // -------------------------------------------------------------
         // at very beginning: move system slowly to find the zero pulse
         // set "if(0)" if you like to ommit at beginning
-        if(!is_initialized)
+        if(0)//!is_initialized)
             {
             find_index();
             if(0)//index1.positionAtIndexPulse != 0 && index2.positionAtIndexPulse != 0) 
@@ -34,6 +34,7 @@ void ControllerLoop::loop(void){
             }
         else
             {
+            m_sa->read_encoders_calc_speed();
             // ------------------------ do the control first
             // calculate desired currents here, you can do "anything" here, 
             // if you like to refer to values e.g. from the gui or from the trafo,

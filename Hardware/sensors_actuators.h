@@ -5,14 +5,13 @@ Tasks for students:
     - define derivative filter correctly
 */
 #include <cstdint>
-#include "DiffCounter.h"
 #include "EncoderCounter.h"
 #include "EncoderCounterIndex.h"
-#include "DiffCounter.h"
 #include "IIR_filter.h"
 #include "LinearCharacteristics.h"
 #include "Unwrapper_2pi.h"
 #include "data_structs.h"
+#include "Enc_unwrap_scale.h"
 
 
 class sensors_actuators
@@ -20,7 +19,7 @@ class sensors_actuators
 public:
     sensors_actuators(Data_Xchange *,float Ts);        // default constructor
     virtual ~sensors_actuators();   // deconstructor
-    void read_encoders(void);       // read both encoders and calculate speeds
+    void read_encoders_calc_speed(void);       // read both encoders and calculate speeds
     float get_phi(uint8_t);         // get angle of motor k
     float get_om(uint8_t);          // get speed of motor k
     void set_des_current(uint8_t);  // set desired current on actuator
@@ -29,8 +28,8 @@ public:
 
 private:
 
-    DiffCounter di1;
-    DiffCounter di2;
+    IIR_filter di1;
+    IIR_filter di2;
     DigitalIn big_button;         // Enable button an backside
     ///------------- Encoder -----------------------
     EncoderCounter counter1;    // initialize counter on PA_6 and PC_7
@@ -45,8 +44,8 @@ private:
     //-------------------------------------
     LinearCharacteristics i2u;
     LinearCharacteristics u2i;
-    Unwrapper_2pi uw2pi1;
-    Unwrapper_2pi uw2pi2;
+    Enc_unwrap_scale uw1;
+    Enc_unwrap_scale uw2;
     Data_Xchange *m_data;
 
 

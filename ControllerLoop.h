@@ -1,7 +1,6 @@
 #include "mbed.h"
 #include "EncoderCounter.h"
 #include "EncoderCounterIndex.h"
-#include "DiffCounter.h"
 #include "LinearCharacteristics.h"
 #include "ThreadFlag.h"
 #include "path_1d.h"
