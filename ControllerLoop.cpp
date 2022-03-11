@@ -4,11 +4,12 @@ using namespace std;
 extern GPA myGPA;
 
 // contructor for controller loop
-ControllerLoop::ControllerLoop(Data_Xchange *data,sensors_actuators *sa, float Ts) : thread(osPriorityHigh,4096)
+ControllerLoop::ControllerLoop(Data_Xchange *data,sensors_actuators *sa, Mirror_Kinematic *mk, float Ts) : thread(osPriorityHigh,4096)
 {
     this->Ts = Ts;
     this->m_data = data;
     this->m_sa = sa;
+    this->m_mk = mk;
     ti.reset();
     ti.start();
     }
@@ -20,6 +21,7 @@ ControllerLoop::~ControllerLoop() {}
 // this is the main loop called every Ts with high priority
 void ControllerLoop::loop(void){
     float i_des;
+    uint8_t k = 0;
     while(1)
         {
         ThisThread::flags_wait_any(threadFlag);
@@ -47,6 +49,11 @@ void ControllerLoop::loop(void){
             m_sa->write_current(1,0);       // set 2nd motor to 0A
             m_sa->enable_motors(true);      // enable motors
             m_sa->set_laser_on_off(m_data->laser_on);
+            }
+        if(++k>=10)
+            {
+            m_mk->P2X(m_data->sens_phi,m_data->est_xy);
+            k = 0;
             }
             
         }// endof the main loop

@@ -30,7 +30,7 @@ int main()
     Mirror_Kinematic mk(&data);     // Mirror_Kinematics class, the geom. parameters, trafos etc. are done
     uart_comm_thread uart_com(&data, &mk,&serial_port,.05f);   // this is the communication thread
     sensors_actuators hardware(&data, Ts);         // in this class all the physical ios are handled
-    ControllerLoop loop(&data,&hardware,Ts);       // this is forthe main controller loop
+    ControllerLoop loop(&data,&hardware,&mk,Ts);       // this is forthe main controller loop
 // ----------------------------------
     serial_port.set_baud(115200);
     serial_port.set_format(8,BufferedSerial::None,1);

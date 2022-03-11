@@ -17,7 +17,7 @@
 class ControllerLoop
 {
 public:
-    ControllerLoop(Data_Xchange *,sensors_actuators *,float Ts);
+    ControllerLoop(Data_Xchange *,sensors_actuators *,Mirror_Kinematic *,float Ts);
     virtual     ~ControllerLoop();
     void start_loop(void);
     void init_controllers(void);
@@ -39,4 +39,5 @@ private:
     float Kv;
     Data_Xchange *m_data;
     sensors_actuators *m_sa;
+    Mirror_Kinematic *m_mk;
 };

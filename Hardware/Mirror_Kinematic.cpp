@@ -13,6 +13,7 @@ Mirror_Kinematic::Mirror_Kinematic(Data_Xchange *data)
     trafo_is_on = false;
     external_control = false;
     controller_is_on = true;
+    max_num_it = 12;
     }
     
 void Mirror_Kinematic::set_offsets(int16_t o1,int16_t o2)
@@ -71,7 +72,7 @@ bool Mirror_Kinematic::X2P(float *X, float *P)
     uint8_t k = 0;
     do
         {
-            if(!P2X(P,Xn) || k==20)
+            if(!P2X(P,Xn) || k==max_num_it)
                 return false;
             dx = Xn[0]-X[0];
             dy = Xn[1]-X[1];
