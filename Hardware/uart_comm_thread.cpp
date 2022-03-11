@@ -41,9 +41,6 @@ extern GPA myGPA;
 
 2xx: set-value and commands (like disable controller...)
 		id1		id2	
-	 	201: 			Set values/parameters
-				1 		inc_additional_offset phi1 / increments	int16_t
-				2		inc_additional_offset phi2	/ 		"			"
 		
 		202:			set desired absolute values	
 				1		phi1		rad		float
@@ -77,7 +74,6 @@ uart_comm_thread::uart_comm_thread(Data_Xchange *data,Mirror_Kinematic *mk,Buffe
     this->uart = com;
     this->m_data = data;
     this->m_mk = mk;
-    //uart->attach(callback(this, &uart_comm_thread::callBack), RawSerial::RxIrq);
     this->Ts = Ts;
     this->csm = 0;
     gpa_stop_sent = false;

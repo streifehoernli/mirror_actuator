@@ -1,6 +1,4 @@
-#ifndef DATA_STRUCTS_H_
-#define DATA_STRUCTS_H_
-
+#pragma once
 
 typedef struct{
     float sens_phi[2];
@@ -11,8 +9,7 @@ typedef struct{
     float cntrl_xy_des[2];
     float i_des[2];         // desired currents
     float wMot[2];          // desired speeds (rad/s)
-    bool laser_on;
+    bool laser_on = false;
     uint8_t num_it;
     }Data_Xchange;
-#endif
     
