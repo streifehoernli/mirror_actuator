@@ -90,8 +90,6 @@ uart_comm_thread::uart_comm_thread(Data_Xchange *data,Mirror_Kinematic *mk,Buffe
     this->Ts = Ts;
     this->csm = 0;
     gpa_stop_sent = false;
-    for(uint16_t k= 0;k<1000;k++)
-        buffer[k] = k;
 }
 
 // #### destructor
@@ -125,7 +123,7 @@ void uart_comm_thread::run(void)
 				break;	
 			case 1012:
 				send(101,34,2*4,(char *)&(m_data->est_xy[0]));		// send actual xy values 
-				send_state = 210;
+				send_state = 250;
 				break;	
 			case 125:		// number of iterations in the trafo
 				send(125,1,1,(char *)&m_data->num_it);		
@@ -134,7 +132,7 @@ void uart_comm_thread::run(void)
 			case 210:		// number of iterations in the trafo
 				if(myDataLogger.new_data_available)
                     {
-                        if(myDataLogger.packet*200<=4*3*myDataLogger.N)
+                        if(myDataLogger.packet*200<4*3*myDataLogger.N)
                             send(210,1+myDataLogger.packet,200,(char *)&(myDataLogger.log_data[myDataLogger.packet*200]));
                         else
                             {

@@ -50,8 +50,6 @@ void ControllerLoop::loop(void){
             m_sa->write_current(1,0);       // set 2nd motor to 0A
             m_sa->enable_motors(true);      // enable motors
             m_sa->set_laser_on_off(m_data->laser_on);
-            float set_value = myDataLogger.get_set_value(ti.read());
-            myDataLogger.write_to_log(ti.read(),set_value,1);
             }
         if(++k>=10)
             {

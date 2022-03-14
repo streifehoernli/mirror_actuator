@@ -47,8 +47,8 @@ int main()
     mk.trafo_is_on =  true;
 
     loop.init_controllers();
-    //uart_com.start_uart();
-    //loop.start_loop();
+    uart_com.start_uart();
+    loop.start_loop();
     ThisThread::sleep_for(200);
     printf("StartLoop\r\n");
     uart_com.send_text((char *)"Start Mirroractuator 2.0");
