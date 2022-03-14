@@ -8,8 +8,10 @@
 #include "Mirror_Kinematic.h"
 #include "data_structs.h"
 #include "GPA.h"
+#include "DataLogger.h"
 #include "FastPWM.h"
 #include "sensors_actuators.h"
+
 
 //extern AnalogIn i_act2;
 

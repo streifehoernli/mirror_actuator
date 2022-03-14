@@ -2,11 +2,12 @@
 #define UART_COMM_THREAD_H_
 
 #include "GPA.h"
+#include "DataLogger.h"
 #include "mbed.h"
 #include "ThreadFlag.h"
 #include "data_structs.h"
-#include "data_structs.h"
 #include "Mirror_Kinematic.h"
+
 
 using namespace std;
 
@@ -25,8 +26,6 @@ using namespace std;
 #define NUM_OF_VALUE    7   // number of expected values
 #define EXPECTED2        LEN_OF_EXP_TYPE2 * NUM_OF_VALUE  // byte per Value * expected values = total expected bytes
 
-extern Mirror_Kinematic mc;
-
 // predefiniton for callback (couldn't implement as member)
 
 class uart_comm_thread{
@@ -35,13 +34,13 @@ public:
     uart_comm_thread(Data_Xchange *,Mirror_Kinematic *, BufferedSerial*,float);
     virtual ~uart_comm_thread();
     void run(void);             // runs the statemachine, call this function periodicly, returns true when new data ready (only true for 1 cycle)
-   // void request();         // request new set of data
+   // void request();         // request new set of data  
     void start_uart(void);
 
     // public vars
     // public vars
 	const uint8_t N = DATA_LEN;
-	uint8_t 	buffer[80];     // RX buffer
+	char 	buffer[256];     // RX buffer
 	void send_text(const char *);
 	
 private:

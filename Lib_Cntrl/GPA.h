@@ -1,6 +1,6 @@
 #ifndef GPA_H_
 #define GPA_H_
-#include "uart_comm_thread.h"
+//#include "uart_comm_thread.h"
 
 
 
