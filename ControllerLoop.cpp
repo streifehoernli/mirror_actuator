@@ -11,6 +11,8 @@ ControllerLoop::ControllerLoop(Data_Xchange *data,sensors_actuators *sa, Mirror_
     this->m_data = data;
     this->m_sa = sa;
     this->m_mk = mk;
+    v_cntrl[0].setup(0.0188, 3.76, 0, 1, Ts, -0.8, 0.8);
+    v_cntrl[1].setup(0.0295, 5.9, 0, 1, Ts, -0.8, 0.8);
     ti.reset();
     ti.start();
     }
@@ -22,6 +24,7 @@ ControllerLoop::~ControllerLoop() {}
 // this is the main loop called every Ts with high priority
 void ControllerLoop::loop(void){
     float i_des;
+    float v_des;
     uint8_t k = 0;
     while(1)
         {
@@ -39,15 +42,27 @@ void ControllerLoop::loop(void){
             }
         else
             {
-            // i_des = myGPA.update(...
+         
+
+            v_des = 50;
+            float error = v_des - m_data->sens_Vphi[0];
+            i_des = v_cntrl[0](error);
+
+            //i_des = myGPA.update(i_des, m_data->sens_Vphi[0]);
+            m_sa->write_current(0,i_des);
+
+            v_des = v_des/2;
+            error = v_des - m_data->sens_Vphi[1];
+            i_des = v_cntrl[1](error);
+            //i_des = myGPA.update(i_des, m_data->sens_Vphi[1]);
+            m_sa->write_current(1,i_des);
             // ------------------------ do the control first
             // calculate desired currents here, you can do "anything" here, 
             // if you like to refer to values e.g. from the gui or from the trafo,
             // please use m_data->xxx values, 
             
             // ------------------------ write outputs
-            m_sa->write_current(0,i_des);
-            m_sa->write_current(1,0);       // set 2nd motor to 0A
+                   // set 2nd motor to 0A
             m_sa->enable_motors(true);      // enable motors
             m_sa->set_laser_on_off(m_data->laser_on);
             }
